@@ -1,0 +1,71 @@
+{
+  "name": "exchange",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "eslint": "eslint --format codeframe *.js \"{lib,test}/**/*.js\"",
+    "prettier": "prettier --write *.js \"{lib,test}/**/*.js\"",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-travis": "npm run eslint && jest --coverage --collectCoverageFrom=lib/**/*.js",
+    "test": "npm run eslint && jest --passWithNoTests"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ccxt": "^1.20.67",
+    "ccxws": "^0.29.3",
+    "config": "^3.2.4",
+    "eventemitter3": "^4.0.0",
+    "pako": "^1.0.10",
+    "socks-proxy-agent": "^4.0.2",
+    "ws": "^7.2.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.9",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+       "/node_modules/",
+       "/test.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test"
+    }
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "semi": false
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 8
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error",
+      "no-undef": "error"
+    },
+    "env": {
+      "es6": true,
+      "jest": true,
+      "node": true
+    }
+  }
+
+}
