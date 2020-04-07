@@ -1,6 +1,6 @@
 {
   "name": "exchange",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,15 +13,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ccxt": "^1.20.67",
-    "ccxws": "^0.29.3",
-    "config": "^3.2.4",
+    "ccxt": "^1.25.83",
     "eventemitter3": "^4.0.0",
     "pako": "^1.0.10",
-    "socks-proxy-agent": "^4.0.2",
     "ws": "^7.2.0"
   },
   "devDependencies": {
+    "config": "^3.2.4",
+    "https-proxy-agent": "3.0.1",
+    "socks-proxy-agent": "4.0.2",
     "coveralls": "^3.0.9",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
@@ -32,8 +32,8 @@
   "jest": {
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-       "/node_modules/",
-       "/test.js"
+      "/node_modules/",
+      "/test.js"
     ]
   },
   "husky": {
@@ -52,13 +52,14 @@
       "eslint:recommended"
     ],
     "parserOptions": {
-      "ecmaVersion": 8
+      "ecmaVersion": 9
     },
     "plugins": [
       "prettier"
     ],
     "rules": {
       "prettier/prettier": "error",
+      "no-unused-vars": "warn",
       "no-undef": "error"
     },
     "env": {
@@ -67,5 +68,4 @@
       "node": true
     }
   }
-
 }

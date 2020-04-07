@@ -1,10 +1,10 @@
-const Exchange = require('../lib/huobipro-ws')
-const agent = require('./agent')
+const { huobiproWs } = require('../index')
+const config = require('config')
 
 let api
 
 beforeEach(() => {
-  api = new Exchange({ agent })
+  api = new huobiproWs(config.exchange)
 })
 
 afterEach(() => {
