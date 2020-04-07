@@ -1,7 +1,7 @@
 {
-  "name": "exchange",
+  "name": "ccxt-ws",
   "version": "0.1.0",
-  "description": "",
+  "description": "Cryptocurrency websocket api inherit from ccxt",
   "main": "index.js",
   "scripts": {
     "eslint": "eslint --format codeframe *.js \"{lib,test}/**/*.js\"",
@@ -10,8 +10,12 @@
     "test-travis": "npm run eslint && jest --coverage --collectCoverageFrom=lib/**/*.js",
     "test": "npm run eslint && jest --passWithNoTests"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "arronzhang@me.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zzdhidden/ccxt-ws.git"
+  },
   "dependencies": {
     "ccxt": "^1.25.83",
     "eventemitter3": "^4.0.0",
