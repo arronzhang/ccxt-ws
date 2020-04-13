@@ -52,5 +52,5 @@ describe('websocket client', () => {
         done()
       }
     })
-  }, 10000)
+  }, 15000)
 })
