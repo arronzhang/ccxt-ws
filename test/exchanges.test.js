@@ -6,7 +6,8 @@ function cleanData() {}
 
 describe.each([
   ['huobiproWs', 'BTC/USDT', 'spot'],
-  ['binanceWs', 'BTC/USDT', 'spot']
+  ['binanceWs', 'BTC/USDT', 'spot'],
+  ['binanceWs', 'BTC/USDT', 'future']
 ])('%s api', (name, symbol, type) => {
   type = type || 'spot'
   const api = new exchanges[name]({
