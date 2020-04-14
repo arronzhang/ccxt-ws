@@ -1,13 +1,16 @@
 const exchanges = require('../index')
 const config = require('config')
 const dayjs = require('dayjs')
+const { ExchangeError } = require('ccxt')
 
 function cleanData() {}
 
 describe.each([
   ['huobiproWs', 'BTC/USDT', 'spot'],
   ['binanceWs', 'BTC/USDT', 'spot'],
-  ['binanceWs', 'BTC/USDT', 'future']
+  ['binanceWs', 'BTC/USDT', 'future'],
+  ['okexWs', 'BTC/USDT', 'spot'],
+  ['okexWs', 'BTC-USDT-SWAP', 'swap']
 ])('%s api', (name, symbol, type) => {
   type = type || 'spot'
   const api = new exchanges[name]({
@@ -34,7 +37,7 @@ describe.each([
     test(
       `${prefix} error data`,
       async () => {
-        await expect(api.wsRequest({ err: 'err' })).rejects.toThrow()
+        await expect(api.wsRequest({ err: 'err' })).rejects.toThrow(ExchangeError)
       },
       20 * 1000
     )
