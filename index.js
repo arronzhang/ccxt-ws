@@ -1,5 +1,6 @@
 const exchanges = {
-  huobiproWs: require('./lib/huobipro-ws.js')
+  huobiproWs: require('./lib/huobipro-ws.js'),
+  binanceWs: require('./lib/binance-ws.js')
 }
 
 module.exports = Object.assign(

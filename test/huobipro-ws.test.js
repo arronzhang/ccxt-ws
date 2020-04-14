@@ -4,7 +4,10 @@ const dayjs = require('dayjs')
 
 function cleanData() {}
 
-describe.each([['huobiproWs', 'BTC/USDT']])('%s api', (name, symbol) => {
+describe.each([
+  ['huobiproWs', 'BTC/USDT'],
+  ['binanceWs', 'BTC/USDT']
+])('%s api', (name, symbol) => {
   const api = new exchanges[name](config.exchange)
   api.on('error', err => {
     console.log(err)
@@ -31,8 +34,8 @@ describe.each([['huobiproWs', 'BTC/USDT']])('%s api', (name, symbol) => {
     test(
       `${name} subscribe trades`,
       done => {
-        api.once('trades', (trades, market) => {
-          expect(trades[0].symbol).toBe(market.symbol)
+        api.once('trades', (trades, s) => {
+          expect(trades[0].symbol).toBe(s)
           api
             .unsubscribeTrades(symbol)
             .then(cleanData)
@@ -78,8 +81,8 @@ describe.each([['huobiproWs', 'BTC/USDT']])('%s api', (name, symbol) => {
     test(
       `${name} subscribe bids asks`,
       done => {
-        api.once('bidsAsks', (ticker, market) => {
-          expect(ticker.symbol).toBe(market.symbol)
+        api.once('bidsAsks', (ticker, s) => {
+          expect(ticker.symbol).toBe(s)
           expect(ticker.ask).toBeDefined()
           expect(ticker.bid).toBeDefined()
           api
