@@ -5,10 +5,18 @@ const dayjs = require('dayjs')
 function cleanData() {}
 
 describe.each([
-  ['huobiproWs', 'BTC/USDT'],
-  ['binanceWs', 'BTC/USDT']
-])('%s api', (name, symbol) => {
-  const api = new exchanges[name](config.exchange)
+  ['huobiproWs', 'BTC/USDT', 'spot'],
+  ['binanceWs', 'BTC/USDT', 'spot']
+])('%s api', (name, symbol, type) => {
+  type = type || 'spot'
+  const api = new exchanges[name]({
+    ...config.exchange,
+    options: {
+      defaultType: type
+    }
+  })
+  const prefix = `${name} ${type}`
+
   api.on('error', err => {
     console.log(err)
   })
@@ -23,7 +31,7 @@ describe.each([
 
   if (api.wsOptions.hasResponse)
     test(
-      `${name} error data`,
+      `${prefix} error data`,
       async () => {
         await expect(api.wsRequest({ err: 'err' })).rejects.toThrow()
       },
@@ -32,7 +40,7 @@ describe.each([
 
   if (api.has.subscribeTrades)
     test(
-      `${name} subscribe trades`,
+      `${prefix} subscribe trades`,
       done => {
         api.once('trades', (trades, s) => {
           expect(trades[0].symbol).toBe(s)
@@ -48,7 +56,7 @@ describe.each([
 
   if (api.has.wsFetchOHLCV)
     test(
-      `${name} fetch OHLCV`,
+      `${prefix} fetch OHLCV`,
       async () => {
         let end = dayjs()
           .startOf('day')
@@ -63,7 +71,7 @@ describe.each([
 
   if (api.has.subscribeOHLCV)
     test(
-      `${name} subscribe OHLCV`,
+      `${prefix} subscribe OHLCV`,
       done => {
         api.once('OHLCV', candle => {
           expect(candle[0]).toBeDefined()
@@ -79,7 +87,7 @@ describe.each([
 
   if (api.has.subscribeBidsAsks)
     test(
-      `${name} subscribe bids asks`,
+      `${prefix} subscribe bids asks`,
       done => {
         api.once('bidsAsks', (ticker, s) => {
           expect(ticker.symbol).toBe(s)
