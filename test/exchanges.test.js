@@ -10,7 +10,8 @@ describe.each([
   ['binanceWs', 'BTC/USDT', 'spot'],
   ['binanceWs', 'BTC/USDT', 'future'],
   ['okexWs', 'BTC/USDT', 'spot'],
-  ['okexWs', 'BTC-USDT-SWAP', 'swap']
+  ['okexWs', 'BTC-USDT-SWAP', 'swap'],
+  ['bitmexWs', 'BTC/USD', 'future']
 ])('%s api', (name, symbol, type) => {
   type = type || 'spot'
   const api = new exchanges[name]({

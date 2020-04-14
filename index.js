@@ -1,6 +1,7 @@
 const exchanges = {
   huobiproWs: require('./lib/huobipro-ws.js'),
   okexWs: require('./lib/okex-ws.js'),
+  bitmexWs: require('./lib/bitmex-ws.js'),
   binanceWs: require('./lib/binance-ws.js')
 }
 
