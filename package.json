@@ -1,6 +1,6 @@
 {
   "name": "ccxt-ws",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cryptocurrency websocket api inherit from ccxt",
   "main": "index.js",
   "scripts": {
@@ -28,12 +28,10 @@
     "dayjs": "^1.11.0",
     "eslint": "^8.12.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "https-proxy-agent": "3.0.1",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
-    "proxy-agent": "^5.0.0",
-    "socks-proxy-agent": "4.0.2"
+    "proxy-agent": "^5.0.0"
   },
   "jest": {
     "testEnvironment": "node",
