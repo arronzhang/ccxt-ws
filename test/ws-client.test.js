@@ -1,46 +1,40 @@
 const Client = require('../lib/ws-client.js')
-
+const config = require('config')
 describe('websocket client', () => {
-  test('connect', done => {
-    const client = new Client('wss://ws.biki.com/kline-api/ws', {
-      pingpong: true,
+  test('connect', (done) => {
+    const client = new Client('wss://stream.binance.com:9443/stream', {
+      ...config.exchange,
       json: true,
-      perMessageDeflate: true
+      messageInflate: false,
     })
 
     client.connect()
     client.on('connect', () => {
-      client.send({
-        event: 'sub',
-        params: {
-          channel: 'market_btcusdt_trade_ticker',
-          cb_id: 'cccc'
-        }
-      })
+      client.send({ method: 'SUBSCRIBE', params: ['btcusdt@aggTrade'], id: 1 })
     })
 
-    client.on('message', msg => {
-      expect(msg).toHaveProperty('ts')
+    client.on('message', (msg) => {
+      expect(msg).toHaveProperty('id')
       client.close()
       done()
     })
   }, 10000)
 
   test('closed', () => {
-    const client = new Client('wss://ws.biki.com/kline-api/ws')
+    const client = new Client('wss://stream.binance.com:9443/stream')
     client.close()
     expect(() => client.connect()).toThrow()
     expect(() => client.send()).toThrow()
   })
 
-  test('reconnect', done => {
+  test('reconnect', (done) => {
     const client = new Client('wss://ggg.com', {
       handshakeTimeout: 2 * 1000,
-      retryTimeout: 10
+      retryTimeout: 10,
     })
 
     client.connect()
-    client.on('error', err => {
+    client.on('error', (err) => {
       expect(err).toHaveProperty('message')
     })
 

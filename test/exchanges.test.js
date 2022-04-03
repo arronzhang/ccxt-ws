@@ -11,18 +11,18 @@ describe.each([
   ['binanceWs', 'BTC/USDT', 'future'],
   ['okexWs', 'BTC/USDT', 'spot'],
   ['okexWs', 'BTC-USDT-SWAP', 'swap'],
-  ['bitmexWs', 'BTC/USD', 'future']
+  ['bitmexWs', 'BTC/USD', 'future'],
 ])('%s api', (name, symbol, type) => {
   type = type || 'spot'
   const api = new exchanges[name]({
     ...config.exchange,
     options: {
-      defaultType: type
-    }
+      defaultType: type,
+    },
   })
   const prefix = `${name} ${type}`
 
-  api.on('error', err => {
+  api.on('error', (err) => {
     console.log(err)
   })
 
@@ -46,13 +46,10 @@ describe.each([
   if (api.has.subscribeTrades)
     test(
       `${prefix} subscribe trades`,
-      done => {
+      (done) => {
         api.once('trades', (trades, s) => {
           expect(trades[0].symbol).toBe(s)
-          api
-            .unsubscribeTrades(symbol)
-            .then(cleanData)
-            .then(done)
+          api.unsubscribeTrades(symbol).then(cleanData).then(done)
         })
         api.subscribeTrades(symbol)
       },
@@ -63,9 +60,7 @@ describe.each([
     test(
       `${prefix} fetch OHLCV`,
       async () => {
-        let end = dayjs()
-          .startOf('day')
-          .add(-1, 'day')
+        let end = dayjs().startOf('day').add(-1, 'day')
         let start = end.add(-1, 'day')
         let res = await api.wsFetchOHLCV(symbol, '1h', +start, null, { end: +end })
         expect(res.length).toBe(25)
@@ -77,13 +72,10 @@ describe.each([
   if (api.has.subscribeOHLCV)
     test(
       `${prefix} subscribe OHLCV`,
-      done => {
-        api.once('OHLCV', candle => {
+      (done) => {
+        api.once('OHLCV', (candle) => {
           expect(candle[0]).toBeDefined()
-          api
-            .unsubscribeOHLCV(symbol, '1h')
-            .then(cleanData)
-            .then(done)
+          api.unsubscribeOHLCV(symbol, '1h').then(cleanData).then(done)
         })
         api.subscribeOHLCV(symbol, '1h')
       },
@@ -93,15 +85,12 @@ describe.each([
   if (api.has.subscribeBidsAsks)
     test(
       `${prefix} subscribe bids asks`,
-      done => {
+      (done) => {
         api.once('bidsAsks', (ticker, s) => {
           expect(ticker.symbol).toBe(s)
           expect(ticker.ask).toBeDefined()
           expect(ticker.bid).toBeDefined()
-          api
-            .unsubscribeBidsAsks(symbol)
-            .then(cleanData)
-            .then(done)
+          api.unsubscribeBidsAsks(symbol).then(cleanData).then(done)
         })
         api.subscribeBidsAsks(symbol)
       },
